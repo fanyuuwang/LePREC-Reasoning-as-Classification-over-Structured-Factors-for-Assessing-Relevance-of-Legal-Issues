@@ -2,7 +2,7 @@
 
 The LEPREC code is publicly released under the MIT License. The LIC dataset, including case text, expert annotations, reasoning questions, and derived verifier scores, is **not distributed in this repository**.
 
-The dataset is available to qualified requesters after review by the authors. To request access, contact the corresponding author using the contact details on the [ACL Anthology paper page](https://aclanthology.org/2026.acl-long.350/) or the repository contact details.
+The dataset is available to qualified requesters after review by the authors. To request access, please kindly contact Fanyu Wang (fanyu.wang@monash.edu) or Dr. Lizhen Qu (lizhen.qu@monash.edu)
 
 Please include the following in a request:
 
