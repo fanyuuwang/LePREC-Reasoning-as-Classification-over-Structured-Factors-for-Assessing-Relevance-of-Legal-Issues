@@ -8,6 +8,7 @@ LePREC is a neuro-symbolic framework for legal issue relevance prediction.  It c
 > - Your name, institution, and institutional email address.
 > - The research purpose and intended use of the data.
 > - A statement that you will not redistribute the data or use it outside the approved purpose.
+
 > To request access, please kindly contact Fanyu Wang (fanyu.wang@monash.edu) or Dr. Lizhen Qu (lizhen.qu@monash.edu)
 > The data are not covered by the MIT License.
 
