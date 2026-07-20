@@ -95,4 +95,4 @@ If you use this code or the LIC dataset, please cite:
 
 ## License
 
-The source code is released under the [MIT License](LICENSE). The LIC dataset is not covered by that license; it is available only under the data-access process described in [DATA_ACCESS.md](DATA_ACCESS.md).
+The source code is released under the [MIT License](LICENSE). The LIC dataset is not covered by that license; it is available only under the data-access process.
