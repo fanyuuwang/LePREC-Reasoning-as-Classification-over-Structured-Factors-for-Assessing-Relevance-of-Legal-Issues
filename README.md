@@ -4,9 +4,12 @@ Official implementation of [*LePREC: Reasoning as Classification over Structured
 
 LePREC is a neuro-symbolic framework for legal issue relevance prediction.  It converts legal reasoning factors into natural-language questions, obtains a score for each question, and uses a transparent linear classifier to predict whether a legal issue is relevant to a case.
 
-> **Data access:** the framework code is publicly released under the MIT License. The LIC dataset, including case text and expert annotations, is **available upon request** and is not included in this repository. Please read [DATA_ACCESS.md](DATA_ACCESS.md) before requesting access.
-
-This directory is the intended root of the public GitHub repository.
+> **Data access:** the framework code is publicly released under the MIT License. The LIC dataset, including case text and expert annotations, is **available upon request** and is not included in this repository. Please kindly send your:
+> - Your name, institution, and institutional email address.
+> - The research purpose and intended use of the data.
+> - A statement that you will not redistribute the data or use it outside the approved purpose.
+> To request access, please kindly contact Fanyu Wang (fanyu.wang@monash.edu) or Dr. Lizhen Qu (lizhen.qu@monash.edu)
+> The data are not covered by the MIT License.
 
 ## Repository layout
 
