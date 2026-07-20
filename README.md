@@ -1,6 +1,6 @@
 # LePREC
 
-Official implementation of [*LePREC: Reasoning as Classification over Structured Factors for Assessing Relevance of Legal Issues*](https://aclanthology.org/2026.acl-long.350/), ACL 2026.
+Official implementation of [*LePREC: Reasoning as Classification over Structured Factors for Assessing Relevance of Legal Issues*](https://aclanthology.org/2026.acl-long.350/), Oral Paper @ ACL 2026.
 
 LePREC is a neuro-symbolic framework for legal issue relevance prediction.  It converts legal reasoning factors into natural-language questions, obtains a score for each question, and uses a transparent linear classifier to predict whether a legal issue is relevant to a case.
 
