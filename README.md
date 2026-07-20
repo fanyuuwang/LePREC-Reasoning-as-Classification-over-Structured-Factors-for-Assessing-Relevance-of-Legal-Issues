@@ -1,72 +1,98 @@
-# LEPREC Repository
+# LePREC
 
-This directory contains a clean implementation of the framework in *LEPREC: Reasoning as Classification over Structured Factors for Assessing Relevance of Legal Issues* (Wang et al., ACL 2026).
+Official implementation of [*LePREC: Reasoning as Classification over Structured Factors for Assessing Relevance of Legal Issues*](https://aclanthology.org/2026.acl-long.350/), ACL 2026.
 
-LEPREC has four stages:
+LePREC is a neuro-symbolic framework for legal issue relevance prediction.  It converts legal reasoning factors into natural-language questions, obtains a score for each question, and uses a transparent linear classifier to predict whether a legal issue is relevant to a case.
 
-1. Construct fact prefixes for incremental candidate-issue generation.
-2. Build and parse the constrained `Whether ...` issue-generation prompts.
-3. Treat Yes/No verifier probabilities for a shared reasoning-question pool as structured features.
-4. Fit and inspect correlation-aware standard linear classifiers using nested stratified five-fold cross-validation.
+> **Data access:** the framework code is publicly released under the MIT License. The LIC dataset, including case text and expert annotations, is **available upon request** and is not included in this repository. Please read [DATA_ACCESS.md](DATA_ACCESS.md) before requesting access.
 
-The package deliberately excludes credentials, cloud authentication, model checkpoints, caches, generated logs, and unrelated experimental scripts.
+This directory is the intended root of the public GitHub repository.
 
-## Install
+## Repository layout
 
-From this directory, create an isolated environment and install the package:
+```text
+src/leprec/
+  prompts.py        # reasoning-question generation and parsing
+  features.py       # question-score feature construction
+  classifier.py     # sparse linear relevance classifier
+  incremental.py    # incremental reasoning workflow
+  evaluation.py     # cross-validation evaluation
+  validation.py     # checks for approved LIC data releases
+  cli.py            # command-line interface
+DATA_ACCESS.md      # access policy for the LIC dataset
+LICENSE             # MIT License for the code
+```
+
+## Installation
 
 ```bash
+git clone <your-repository-url>
+cd leprec
 python3 -m venv .venv
-.venv/bin/python -m pip install "numpy>=1.24" "scikit-learn>=1.3"
+.venv/bin/python -m pip install --upgrade pip
 .venv/bin/python -m pip install -e .
 ```
 
-## Prepare the dataset release
+The package exposes the `leprec` command-line interface. Use `leprec --help` to view the available commands.
 
-The script reads the evaluation inputs from the original research workspace and writes only into the sibling `release_dataset/` directory:
+## Dataset
 
-```bash
-.venv/bin/python -m leprec.cli prepare-data \
-  --source-root ../dataset/LegalSemi \
-  --release-root ../release_dataset
+LIC contains legal case–issue examples used in the paper, together with the supporting case text, expert annotations, reasoning questions, and question scores needed for release validation and evaluation. It is not distributed in the public code repository.
+
+Researchers seeking access should follow the process in [DATA_ACCESS.md](DATA_ACCESS.md). Approved recipients should keep the dataset outside the public repository and comply with the agreed data-use conditions.
+
+After access is approved, arrange the supplied files as follows:
+
+```text
+/path/to/LIC/
+  LIC.json
+  LICU.json
+  reasoning_questions.json
+  expert_annotations/
+    manifest.json
+    phi4_question_scores.json.gz
 ```
 
-The resulting manifest verifies the expected 1,188 LICL labels, 2,464 reasoning questions, their Phi-4 feature matrix, and the source-derived LICU export.
-
-The primary human-readable datasets are `../release_dataset/LIC.json`, `../release_dataset/LICU.json`, and `../release_dataset/reasoning_questions.json`. LIC records contain `case_id`, `case_name`, point-form `facts`, and issue objects with both `relevance_label` (`Relevant`/`Irrelevant`) and the original binary `label`. LICU records use the same case fields and identify each issue as `Source-extracted (unlabeled)`; no expert binary label is invented. The reasoning-question file contains the ordered `id`, `question`, and `explanation` objects used to form the feature columns.
-
-## Validate the complete public dataset
-
-Run this before evaluation or publication:
+Validate an approved data release:
 
 ```bash
-.venv/bin/python -m leprec.cli validate-data \
-  --release-root ../release_dataset
+leprec validate-data --release-root /path/to/LIC
 ```
 
-The validator checks the complete data contract: LIC labels, the exact `0/1` to `-1/1` feature-label encoding and order, reasoning-question metadata/order, probability-score bounds, LICU's unlabelled status, and the release manifest hashes.
-
-## Reproduce the linear evaluation
+Run the framework evaluation:
 
 ```bash
-.venv/bin/python -m leprec.cli evaluate-release \
-  --release-root ../release_dataset \
-  --output ../release_dataset/expert_annotations/leprec_cv_metrics.json
+leprec evaluate-release \
+  --release-root /path/to/LIC \
+  --output results/leprec_cv_metrics.json
 ```
 
-`evaluate-release` validates the release before fitting the nested cross-validation models. The Phi-4 score matrix is a released derived artifact. Regenerating it with another verifier model is optional: use `leprec.incremental.fact_prefixes`, `leprec.prompts.build_incremental_prompt`, and a model-specific scorer to produce one probability score per reasoning question and issue-fact pair. For a custom already-validated feature file, use the lower-level `evaluate --features ...` command.
+## Framework workflow
+
+1. Generate or provide structured legal-reasoning questions for each candidate issue.
+2. Score the questions against the facts of the case.
+3. Construct a question-score feature vector for every case–issue pair.
+4. Fit and evaluate the linear relevance classifier.
+
+The supplied commands validate the correspondence between the case–issue labels, reasoning questions, and score matrix before evaluation.
 
 ## Citation
 
+If you use this code or the LIC dataset, please cite:
+
 ```bibtex
 @inproceedings{wang-etal-2026-leprec,
-  title = {LePREC: Reasoning as Classification over Structured Factors for Assessing Relevance of Legal Issues},
+  title = {Le{PREC}: Reasoning as Classification over Structured Factors for Assessing Relevance of Legal Issues},
   author = {Wang, Fanyu and Kang, Xiaoxi and Burgess, Paul and Srivastava, Aashish and Arora, Chetan and Trakic, Adnan and Soon, Lay-Ki and Hossain, Md Khalid and Qu, Lizhen},
   booktitle = {Proceedings of the 64th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)},
   year = {2026},
   pages = {7701--7736},
-  doi = {10.18653/v1/2026.acl-long.350}
+  publisher = {Association for Computational Linguistics},
+  doi = {10.18653/v1/2026.acl-long.350},
+  url = {https://aclanthology.org/2026.acl-long.350/}
 }
 ```
 
-No software licence has been selected yet. Add an author-approved `LICENSE` file before making this repository public.
+## License
+
+The source code is released under the [MIT License](LICENSE). The LIC dataset is not covered by that license; it is available only under the data-access process described in [DATA_ACCESS.md](DATA_ACCESS.md).
