@@ -42,7 +42,7 @@ The package exposes the `leprec` command-line interface. Use `leprec --help` to 
 
 LIC contains legal case–issue examples used in the paper, together with the supporting case text, expert annotations, reasoning questions, and question scores needed for release validation and evaluation. It is not distributed in the public code repository.
 
-Researchers seeking access should follow the process in [DATA_ACCESS.md](DATA_ACCESS.md). Approved recipients should keep the dataset outside the public repository and comply with the agreed data-use conditions.
+Researchers seeking access should follow the process above. Approved recipients should keep the dataset outside the public repository and comply with the agreed data-use conditions.
 
 After access is approved, arrange the supplied files as follows:
 
