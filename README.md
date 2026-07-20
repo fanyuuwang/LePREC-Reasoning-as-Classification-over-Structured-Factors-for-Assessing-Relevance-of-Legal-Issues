@@ -23,7 +23,6 @@ src/leprec/
   evaluation.py     # cross-validation evaluation
   validation.py     # checks for approved LIC data releases
   cli.py            # command-line interface
-DATA_ACCESS.md      # access policy for the LIC dataset
 LICENSE             # MIT License for the code
 ```
 
@@ -52,9 +51,6 @@ After access is approved, arrange the supplied files as follows:
   LIC.json
   LICU.json
   reasoning_questions.json
-  expert_annotations/
-    manifest.json
-    phi4_question_scores.json.gz
 ```
 
 Validate an approved data release:
